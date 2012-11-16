@@ -9,4 +9,7 @@ def next_pali(mag):
       >>> 90009 + t(5)
       88899
     '''
-    return -int('1'*(mag-2)+'0')
+    # replace this str->int etc with rounding based on mag
+    if int(str(num)[1]) == 0:
+        return num - 11
+    return num - int('1'*(mag-2)+'0')
