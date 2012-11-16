@@ -8,9 +8,6 @@ def factors(target, mag):
     symmetry = start_low * 2
     high, low = start_high, start_low
     while 1:
-        #if high < start_low or low > start_high:
-        #    high, low = 0, 0
-        #    break
         if high <= symmetry and low >= symmetry:
             high, low = 0, 0 
             break
