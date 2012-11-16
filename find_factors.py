@@ -1,4 +1,4 @@
-def prod(target, mag):
+def factors(target, mag):
     '''
     Uses a squeeze algorithm to find factors
     that may yield a given product. 
