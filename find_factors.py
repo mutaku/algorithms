@@ -3,11 +3,16 @@ def factors(target, mag):
     Uses a squeeze algorithm to find factors
     that may yield a given product. 
     '''
-    high = 10**mag - 1
-    low = 10**(mag - 1)
+    start_high = 10**mag - 1
+    start_low = 10**(mag - 1)
+    symmetry = start_low * 2
+    high, low = start_high, start_low
     while 1:
-        if high < 10**(mag-1) or low > 10**mag - 1:
-            high, low = 0, 0
+        #if high < start_low or low > start_high:
+        #    high, low = 0, 0
+        #    break
+        if high <= symmetry and low >= symmetry:
+            high, low = 0, 0 
             break
         elif high * low < target:
             low += 1
