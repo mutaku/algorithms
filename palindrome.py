@@ -1,3 +1,21 @@
+#########################################
+# Find the maximum numerical palindrome
+# product from multiplying together two
+# factors of a certain magnitude
+#
+# e.g. What is the maximum palindromic 
+# product for 4digit x 4digit?
+#
+# >>> palindrome.get_pali(4)
+# ((9999, 9901), '99000099')
+#
+# So the maximum palindromic product for
+# 4digit*4digit is 99000099 yielded by
+# 9999*9901.
+#
+#    - Matthew Martz 2012
+#########################################
+
 def gen_pali(digits, limit_digits=True):
     '''
     Makes palindromes and tries to see if we can
