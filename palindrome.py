@@ -16,7 +16,7 @@
 #    - Matthew Martz 2012
 #########################################
 
-def gen_pali(digits, limit_digits=True):
+def get_pali(digits, limit_digits=True):
     '''
     Finds the maximum numerical palindrome for
     n-digits*n-digits.
