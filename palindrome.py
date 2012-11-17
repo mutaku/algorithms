@@ -1,25 +1,64 @@
-##############
-# Numerical
-# Palindromes
-##############
-
-from time import time
+def gen_pali(digits, limit_digits=True):
+    '''
+    Makes palindromes and tries to see if we can
+    find factors to create it.
+    '''
+    max_pali = None
+    mag = digits * 2
+    start = 10**mag - 1
+    counter = start
+    print start, digits
+    symmetry = int(str(start)[:mag / 2])
+    if limit_digits:
+        stop = 10**(mag - 1)
+    else:
+        stop = 0
+    while counter >= stop:
+        if mag % 2 == 0:
+            num = str(symmetry)+str(symmetry)[::-1]
+            if is_pali(num):
+                to_make = factors(int(num), digits)
+                if to_make != (0, 0):
+                    max_pali = (to_make, num)
+                    break
+        else:
+            for i in range(9, -1, -1):
+                num = str(symmetry)+str(i)+str(symmetry)[::-1]
+                if is_pali(num):
+                    to_make = factors(int(num), digits)
+                    if to_make != (0, 0):
+                        max_pali = (to_make, num)
+                        break
+        counter -= 1
+        symmetry -= 1
+    return max_pali
 
 def is_pali(num):
+    '''
+    Determines if number is palindromic.
+    '''
     return str(num) == str(num)[::-1]
 
-def get_max_pali(mag):
-    start = 10**mag - 1
-    end = 10**(mag - 1)
-    symmetry = 10**mag / 2
-    palindrome = [0, 0, 0]
-    begin_time = time()
-    for x in range(start, symmetry, -1):
-        for y in range(start, end, -1):
-            prod = x * y
-            if is_pali(prod) and prod > palindrome[2]:
-                palindrome = [x, y, prod]
-                break
-    end_time = time()
-    complete_time = end_time - begin_time
-    return palindrome, complete_time
+def factors(target, mag):
+    '''
+    Uses a squeeze algorithm to find factors
+    that may yield a given product.
+    '''
+    start_high = 10**mag - 1
+    start_low = 10**(mag - 1)
+    symmetry = start_low * 2
+    high, low = start_high, start_low
+    while 1:
+        if high <= symmetry and low >= symmetry:
+            high, low = 0, 0
+            break
+        elif high**2 < target:
+            high, low = 0, 0
+            break
+        elif high * low < target:
+            low += 1
+        elif high * low > target:
+            high -= 1
+        elif high * low == target:
+            break
+    return (high, low)
