@@ -105,7 +105,7 @@ def factors(target, mag):
         # if our target is greater than the square
         # of the highest possible factor, we cannot
         # make this product and break
-        if high**2 < target:
+        if high**2 < target or low**2 < target:
             high, low = 0, 0
             break
         # if high and low iterators hit the
