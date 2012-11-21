@@ -170,7 +170,8 @@ def factors_sqrt(target):
     symmetry = int(round(sqrt(target)))
     mag = len(str(target))
     factor_ceiling = 10**(mag / 2) - 1
-    factor_floor = 10**(mag / 2 - 1)
+    #factor_floor = 10**(mag / 2 - 1)
+    factor_floor = symmetry - (factor_ceiling - symmetry)
     high, low = symmetry, symmetry
     while 1:
         if factor_ceiling**2 < target:
