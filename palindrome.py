@@ -16,6 +16,8 @@
 #    - Matthew Martz 2012
 #########################################
 
+from math import sqrt
+
 def get_pali(digits, limit_digits=True):
     '''
     Finds the maximum numerical palindrome for
@@ -146,4 +148,23 @@ def factors(target, mag, full_range=False, inclusive=False):
     # return our squeeze factors
     if inclusive:
         return factor_list
+    return (high, low)
+
+def factors_sqrt(target):
+    '''
+    Uses sqrt sieving to find factors
+    of target
+    '''
+    # find our sqrt symmetry point and
+    # since we want integers we round and
+    # use the integer form of this value
+    symmetry = int(round(sqrt(target)))
+    high, low = symmetry, symmetry
+    while 1:
+        if high * low < target:
+            low += 1
+        elif high * low > target:
+            high -= 1
+        elif high * low == target:
+            break
     return (high, low)
