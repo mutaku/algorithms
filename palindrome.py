@@ -82,7 +82,7 @@ def get_pali(digits, limit_digits=True):
     # ((factor high, factor low), palindrome)
     return max_pali
 
-def factors(target, mag):
+def factors(target, mag, full_range=False, inclusive=False):
     '''
     Uses a squeeze algorithm to find factors
     that may yield a given product. We are not
@@ -93,14 +93,25 @@ def factors(target, mag):
     # set our max and minimum values
     # e.g. 3 digit factors would be
     # 999-100 based on mag=3
-    start_high = 10**mag - 1
-    start_low = 10**(mag - 1)
+    # we can set full range to be all inclusive
+    # from 0 to mag to use this as a more generic
+    # factorization
+    if full_range:
+        start_low = 0
+        start_high = target
+    else:
+        start_low = 10**(mag - 1)
+        start_high = 10**mag - 1
     # get symmetry (half way point) of our
     # target product
     symmetry = start_low * 2
     # set our squeeze factors to the
     # high and low start points
     high, low = start_high, start_low
+    # setup a container for all the possible
+    # factors if we want inclusivity
+    if inclusive:
+        factor_list = []
     while 1:
         # if our target is greater than the square
         # of the highest possible factor, we cannot
@@ -126,6 +137,13 @@ def factors(target, mag):
             high -= 1
         # if we've hit the target, break
         elif high * low == target:
-            break
+            if inclusive:
+                factor_list.append((high, low))
+                high -= 1
+                low += 1
+            else:
+                break
     # return our squeeze factors
+    if inclusive:
+        return factor_list
     return (high, low)
