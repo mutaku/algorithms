@@ -18,7 +18,7 @@
 
 from math import sqrt
 
-def get_pali(digits, limit_digits=True):
+def get_pali(digits, limit_digits=True, square_sieve=True):
     '''
     Finds the maximum numerical palindrome for
     n-digits*n-digits.
@@ -36,6 +36,14 @@ def get_pali(digits, limit_digits=True):
         stop = 10**(mag - 1)
     else:
         stop = 0
+    # assign our desired factorization function
+    # sqrt is fastest and will find only n-digit factors
+    # the other version is slower but can potentially
+    # find all factors as well as any primes
+    if square_sieve:
+        factorization = factors_sqrt
+    else:
+        factorization = factors
     while counter >= stop:
         # If we have even magnitude our sequence
         # is symmetrical and we just flip
@@ -46,7 +54,7 @@ def get_pali(digits, limit_digits=True):
             num = int(str(symmetry)+str(symmetry)[::-1])
             # check to see if we can make this
             # from our possible factors of n digits
-            to_make = factors(num, digits)
+            to_make = factorization(num)
             if to_make != (0, 0):
                 max_pali = (to_make, num)
                 # we've found a possible palindrome
@@ -64,7 +72,7 @@ def get_pali(digits, limit_digits=True):
                 num = int(str(symmetry)+str(i)+str(symmetry)[::-1])
                 # check to see if we can make this
                 # from our possible factors of n digits
-                to_make = factors(num, digits)
+                to_make = factorization(num)
                 if to_make != (0, 0):
                     max_pali = (to_make, num)
                     # we've found a possible palindrome
@@ -84,7 +92,7 @@ def get_pali(digits, limit_digits=True):
     # ((factor high, factor low), palindrome)
     return max_pali
 
-def factors(target, mag, full_range=False, inclusive=False):
+def factors(target, full_range=False, inclusive=False):
     '''
     Uses a squeeze algorithm to find factors
     that may yield a given product. We are not
@@ -98,6 +106,7 @@ def factors(target, mag, full_range=False, inclusive=False):
     # we can set full range to be all inclusive
     # from 0 to mag to use this as a more generic
     # factorization
+    mag = len(str(target)) / 2
     if full_range:
         start_low = 0
         start_high = target
@@ -159,9 +168,21 @@ def factors_sqrt(target):
     # since we want integers we round and
     # use the integer form of this value
     symmetry = int(round(sqrt(target)))
+    mag = len(str(target))
+    factor_ceiling = 10**(mag / 2) - 1
+    factor_floor = 10**(mag / 2 - 1)
     high, low = symmetry, symmetry
     while 1:
-        if high * low < target:
+        if factor_ceiling**2 < target:
+            high, low = 0, 0
+            break
+        elif high < factor_floor or low < factor_floor:
+            high, low = 0, 0
+            break
+        elif high > factor_ceiling or low > factor_ceiling:
+            high, low = 0, 0
+            break
+        elif high * low < target:
             low += 1
         elif high * low > target:
             high -= 1
