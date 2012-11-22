@@ -16,7 +16,7 @@
 #    - Matthew Martz 2012
 #########################################
 
-from math import sqrt
+from math import sqrt, log10
 
 def get_pali(digits, limit_digits=True, square_sieve=True):
     '''
