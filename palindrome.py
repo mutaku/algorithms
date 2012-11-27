@@ -180,31 +180,31 @@ def factors_sqrt(target):
     # distance of maximum from this point
     factor_floor = symmetry - (factor_ceiling - symmetry)
     high, low = symmetry, symmetry
-    while 1:
-        # break and set to 0, 0 if we cannot
-        # possibly make this product with n*n digits
-        if factor_ceiling**2 < target:
-            high, low = 0, 0
-            break
-        # of either iterator goes below floor
-        # we break
-        elif high < factor_floor or low < factor_floor:
-            high, low = 0, 0
-            break
-        # if either iterator goes above ceiling
-        # we break
-        elif high > factor_ceiling or low > factor_ceiling:
-            high, low = 0, 0
-            break
-        # if we are too low, increment up an iterator
-        elif high * low < target:
-            low += 1
-        # if we are too high, increment down an iterator
-        elif high * low > target:
-            high -= 1
-        # if we've hit our target, we break with iterators
-        # resting at our factors
-        elif high * low == target:
-            break
+    # break and set to 0, 0 if we cannot
+    # possibly make this product with n*n digits
+    if factor_ceiling**2 < target:
+        high, low = 0, 0
+    else:
+        while 1:
+            # if either iterator goes below floor
+            # we break
+            if high < factor_floor or low < factor_floor:
+                high, low = 0, 0
+                break
+            # if either iterator goes above ceiling
+            # we break
+            elif high > factor_ceiling or low > factor_ceiling:
+                high, low = 0, 0
+                break
+            # if we are too low, increment up an iterator
+            elif high * low < target:
+                low += 1
+            # if we are too high, increment down an iterator
+            elif high * low > target:
+                high -= 1
+            # if we've hit our target, we break with iterators
+            # resting at our factors
+            elif high * low == target:
+                break
     # return our fast sieve products
     return (high, low)
