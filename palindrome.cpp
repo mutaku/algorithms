@@ -46,7 +46,11 @@ int main(){
     int magnitude = factor_size * 2;
     // maximum, or start iteration value
     long long start = pow((double)10, magnitude) - 1;
-    long long counter = start;
+    // stop point for n by n digit factor products
+    // we should not hit this else we have no
+    // palindromes
+    long long stop = pow((double)10, (factor_size - 1));
+
     // Cut the number into symmetrical elements
     // we will then flip to make palindromes
     // convert number into string and take first half substring
@@ -54,10 +58,35 @@ int main(){
     string symmetry_string = number_string.substr(0, factor_size);
     long long symmetry = as_int(symmetry_string);
 
+    // ------------------------------------------------------------
     // debugging things and making sure our conversions are working
     cout << symmetry << " - symmetry" << endl;
+    cout << "start " << start << " - stop " << stop << endl;
     long long test_int = 5;
     string test_str = "5";
     cout << typeid(symmetry).name() << typeid(test_int).name() << endl;
     cout << typeid(symmetry_string).name() << typeid(test_str).name() << endl;
+    // end debugging stuffs
+    // ------------------------------------------------------------
+
+    long long factor_i;
+    long long factor_j;
+    long long max_pali;
+    long long num;
+    while (symmetry >= stop){
+        symmetry_string = as_string(symmetry);
+        num = as_int(symmetry_string +
+                string (symmetry_string.rbegin(),
+                    symmetry_string.rend()));
+        cout << num << endl;
+        // check this palindrome now
+
+        // finally, increment our counters down
+        symmetry = as_int(symmetry_string);
+        symmetry--;
+
+        // debugging
+        cout << symmetry << " s - c " << counter << endl;
+    }
+
 }
