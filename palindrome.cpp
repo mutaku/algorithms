@@ -15,7 +15,12 @@
 
 using namespace std;
 
-pair<long long, long long> factorize(long long product){
+struct Factors {
+    long long i;
+    long long j;
+};
+
+Factors factorize(long long product){
     // square sieving to search for factors
     long long symmetry;
     symmetry = floor(sqrt(product) + 0.5);
@@ -50,7 +55,8 @@ pair<long long, long long> factorize(long long product){
             }
         }
     }
-    return make_pair(high, low);
+    Factors results = { high, low };
+    return results;
 }
 
 int get_digits(){
@@ -103,20 +109,24 @@ l;
  << endl;
     // end debugging stuffs 
     // ------------------------------------------------------------
-    long long factor_i;
-    long long factor_j;
     long long max_pali;
     long long num;
+    Factors results;
     while (symmetry >= stop){
         symmetry_string = as_string(symmetry);
         num = as_int(symmetry_string + 
                 string (symmetry_string.rbegin(), 
                     symmetry_string.rend()));
-        cout << num << endl;
         // check this palindrome now
+        results = factorize(num);
+        if (results.i != 0 &&
+                results.j != 0){
+            break;
+        }
         // finally, increment our counters down
         symmetry = as_int(symmetry_string);
         symmetry--;
-        cout << symmetry << endl;
     }
+    cout << results.i << " , " << results.j << " , " << num << endl;
+    return 0;
 }
