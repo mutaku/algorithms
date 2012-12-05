@@ -9,6 +9,7 @@
 #include <string>
 #include <sstream>
 #include <cmath>
+#include <gmp.h>
 
 // includes for testing only
 #include <typeinfo>
