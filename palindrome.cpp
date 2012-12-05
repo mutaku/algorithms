@@ -90,9 +90,14 @@ long long as_int(string number){
     return atoi(number.c_str());
 }
 
-int main(){
+int main(int argc, char * argv[]){
     // get number of digits for factor size
-    int factor_size = get_digits();
+    int factor_size;
+    if (argc > 1){
+        factor_size = atoi(argv[1]);
+    } else {
+        factor_size = get_digits();
+    }
     // product magnitude
     int magnitude = factor_size * 2;
     // maximum, or start iteration value
