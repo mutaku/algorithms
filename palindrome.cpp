@@ -29,33 +29,30 @@ Factors factorize(long long product){
     long long factor_ceiling, factor_floor;
     factor_ceiling = pow((double)10, (mag / 2)) - 1;
     factor_floor = symmetry - (factor_ceiling - symmetry);
-    long long high, low, low_high_product;
+    Factors results = { 0, 0 };
+    long long low_high_product;
     if (pow((double)factor_ceiling, 2) < product){
-        high = 0;
-        low = 0;
-    } else {
         while(1){
-            low_high_product = low * high;
+            low_high_product = results.i * results.j;
             if (low_high_product == product){
                 break;
-            } else if (high < factor_floor ||
-                    low < factor_floor){
-                high = 0;
-                low = 0;
+            } else if (results.j < factor_floor ||
+                    results.i < factor_floor){
+                results.i  = 0;
+                results.j = 0;
                 break;
-            } else if (high > factor_ceiling ||
-                    low > factor_ceiling){
-                high = 0;
-                low = 0;
+            } else if (results.j > factor_ceiling ||
+                    results.i > factor_ceiling){
+                results.i  = 0;
+                results.j = 0;
                 break;
             } else if (low_high_product < product){
-                low++;
+                results.j++;
             } else if (low_high_product > product){
-                high--;
+                results.i--;
             }
         }
     }
-    Factors results = { high, low };
     return results;
 }
 
