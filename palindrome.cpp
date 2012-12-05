@@ -29,26 +29,40 @@ Factors factorize(long long product){
     long long factor_ceiling, factor_floor;
     factor_ceiling = pow((double)10, (mag / 2)) - 1;
     factor_floor = symmetry - (factor_ceiling - symmetry);
-    Factors results = { 0, 0 };
+    cout << "floor : " << factor_floor << " ceiling : " << factor_ceiling << endl;
+    Factors results = { symmetry, symmetry  };
     long long low_high_product;
     if (pow((double)factor_ceiling, 2) < product){
+        results.i = 0;
+        results.j = 0;
+    } else if ((factor_floor * factor_ceiling) == product){
+        results.i = factor_floor;
+        results.j = factor_ceiling;
+    } else {
         while(1){
+            cout << product << endl;
+            cout << results.i << " , " << results.j << endl;
             low_high_product = results.i * results.j;
             if (low_high_product == product){
+                cout << "match" << endl;
                 break;
             } else if (results.j < factor_floor ||
                     results.i < factor_floor){
+                cout << "too low" << endl;
                 results.i  = 0;
                 results.j = 0;
                 break;
             } else if (results.j > factor_ceiling ||
                     results.i > factor_ceiling){
+                cout << "too high" << endl;
                 results.i  = 0;
                 results.j = 0;
                 break;
             } else if (low_high_product < product){
+                cout << "up" << endl;
                 results.j++;
             } else if (low_high_product > product){
+                cout << "down" << endl;
                 results.i--;
             }
         }
@@ -94,6 +108,7 @@ int main(){
     string number_string = as_string(start);
     string symmetry_string = number_string.substr(0, factor_size);
     long long symmetry = as_int(symmetry_string);
+
     // ------------------------------------------------------------
     // debugging things and making sure our conversions are working
     cout << symmetry << " - symmetry" << endl;
@@ -104,6 +119,7 @@ int main(){
     cout << typeid(symmetry_string).name() << typeid(test_str).name() << endl;
     // end debugging stuffs 
     // ------------------------------------------------------------
+
     long long max_pali;
     long long num;
     Factors results;
@@ -116,6 +132,7 @@ int main(){
         results = factorize(num);
         if (results.i != 0 &&
                 results.j != 0){
+            cout << "found" << endl;
             break;
         }
         // finally, increment our counters down
