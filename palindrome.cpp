@@ -24,13 +24,30 @@ pair<long long, long long> factorize(long long product){
     long long factor_ceiling, factor_floor;
     factor_ceiling = pow((double)10, (mag / 2)) - 1;
     factor_floor = symmetry - (factor_ceiling - symmetry);
-    long long high, low;
+    long long high, low, low_high_product;
     if (pow((double)factor_ceiling, 2) < product){
         high = 0;
         low = 0;
     } else {
         while(1){
-            // find factors
+            low_high_product = low * high;
+            if (low_high_product == product){
+                break;
+            } else if (high < factor_floor ||
+                    low < factor_floor){
+                high = 0;
+                low = 0;
+                break;
+            } else if (high > factor_ceiling ||
+                    low > factor_ceiling){
+                high = 0;
+                low = 0;
+                break;
+            } else if (low_high_product < product){
+                low++;
+            } else if (low_high_product > product){
+                high--;
+            }
         }
     }
     return make_pair(high, low);
