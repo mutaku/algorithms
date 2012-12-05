@@ -15,14 +15,14 @@
 
 using namespace std;
 
-long long factorize(long long product){
+pair<long long, long long> factorize(long long product){
     // square sieving to search for factors
     long long symmetry;
     symmetry = floor(sqrt(product) + 0.5);
-    int magitude;
-    magnitude = log10((int)product) + 1;
+    int mag;
+    mag = floor(log10(product)) + 1;
     long long factor_ceiling, factor_floor;
-    factor_ceiling = pow((double)10, (magnitude / 2)) - 1;
+    factor_ceiling = pow((double)10, (mag / 2)) - 1;
     factor_floor = symmetry - (factor_ceiling - symmetry);
     long long high, low;
     if (pow((double)factor_ceiling, 2) < product){
@@ -100,8 +100,6 @@ l;
         // finally, increment our counters down
         symmetry = as_int(symmetry_string);
         symmetry--;
-        
-        // debugging 
-        cout << symmetry << " s - c " << counter << endl;
+        cout << symmetry << endl;
     }
 }
