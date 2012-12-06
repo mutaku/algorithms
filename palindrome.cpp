@@ -119,12 +119,12 @@ int main(int argc, char * argv[]){
 
     // ------------------------------------------------------------
     // debugging things and making sure our conversions are working
-    cout << symmetry << " - symmetry" << endl;
-    cout << "start " << start << " - stop " << stop << endl;
-    long long test_int = 5;
-    string test_str = "5";
-    cout << typeid(symmetry).name() << typeid(test_int).name() << endl;
-    cout << typeid(symmetry_string).name() << typeid(test_str).name() << endl;
+    //cout << symmetry << " - symmetry" << endl;
+    //cout << "start " << start << " - stop " << stop << endl;
+    //long long test_int = 5;
+    //string test_str = "5";
+    //cout << typeid(symmetry).name() << typeid(test_int).name() << endl;
+    //cout << typeid(symmetry_string).name() << typeid(test_str).name() << endl;
     // end debugging stuffs 
     // ------------------------------------------------------------
     
