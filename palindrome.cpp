@@ -10,6 +10,7 @@
 #include <sstream>
 #include <cmath>
 #include <gmp.h>
+#include <time.h>
 
 // includes for testing only
 #include <typeinfo>
@@ -92,6 +93,7 @@ long long as_int(string number){
 }
 
 int main(int argc, char * argv[]){
+    clock_t start_time, end_time;
     // get number of digits for factor size
     int factor_size;
     if (argc > 1){
@@ -125,6 +127,8 @@ int main(int argc, char * argv[]){
     cout << typeid(symmetry_string).name() << typeid(test_str).name() << endl;
     // end debugging stuffs 
     // ------------------------------------------------------------
+    
+    start_time = clock();
 
     long long max_pali;
     long long num;
@@ -145,6 +149,11 @@ int main(int argc, char * argv[]){
         symmetry = as_int(symmetry_string);
         symmetry--;
     }
+    
+    end_time = clock();
+    float seconds = float(end_time - start_time) / CLOCKS_PER_SEC;
+    
     cout << results.i << " , " << results.j << " , " << num << endl;
+    cout << seconds << " s to run" << endl;
     return 0;
 }
